@@ -1,5 +1,5 @@
 /** 外部import */
-import { FC, useCallback, useState } from "react";
+import { FC, useCallback, useState, startTransition } from "react";
 
 /** 内部import */
 import { Avatar } from "./Avatar";
@@ -56,7 +56,9 @@ export const Transition: FC = () => {
 
   const onClickAssignee = useCallback((assignee: string): void => {
     setSelectedAssignee(assignee);
-    setTaskList(filteringAssignee(assignee));
+    startTransition(() => {
+      setTaskList(filteringAssignee(assignee));
+    })
   }, []);
 
   return (
