@@ -1,5 +1,5 @@
 /** 外部import */
-import { FC, useCallback, useState, startTransition } from "react";
+import { FC, useCallback, useState, useTransition } from "react";
 
 /** 内部import */
 import { Avatar } from "./Avatar";
@@ -51,6 +51,8 @@ const filteringAssignee = (assignee: string) => {
 }
 
 export const Transition: FC = () => {
+  const [isPending, startTransition] = useTransition();
+
   const [selectedAssignee, setSelectedAssignee] = useState<string>("");
   const [taskList, setTaskList] = useState<Task[]>(tasks);
 
@@ -101,6 +103,7 @@ export const Transition: FC = () => {
             width: "300px",
             margin: "auto",
             background: "lavender",
+            opacity: isPending ? 0.5 : 1,
           }}
         >
           <p>タイトル：{task.title}</p>
