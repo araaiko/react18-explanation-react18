@@ -1,5 +1,5 @@
 /* 外部import */
-import React from "react";
+import React, { Suspense } from "react";
 
 /* 内部import */
 import "./App.css";
@@ -17,7 +17,9 @@ function App() {
       <hr />
       <Transition />
       <hr />
-      <ReactQuery />
+      <Suspense fallback={<p>ローディング中だよ〜</p>}>
+        <ReactQuery />
+      </Suspense>
     </div>
   );
 }
