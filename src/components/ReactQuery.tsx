@@ -1,28 +1,29 @@
 /** 外部import */
-import { FC } from "react";
-import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
+import { FC, Suspense } from "react";
+import { ErrorBoundary } from "react-error-boundary";
 
-type Album = {
-  userId: number;
-  id: number;
-  title: string;
-};
-
-const fetchAlbums = async() => {
-  const result = await axios.get<Album[]>("https://jsonplaceholder.typicode.com/albums");
-  return result.data;
-}
+/** 内部import */
+import { AlbumList } from "./AlbumList";
+import { Sidebar } from "./Sidebar";
+import { TodoList } from "./TodoList";
 
 export const ReactQuery: FC = () => {
-  const { data } = useQuery<Album[]>(["albums"], fetchAlbums);
 
   return (
-    <div>
-      <p>React Query</p>
-      {data?.map((album) => (
-        <p key={album.id}>{album.title}</p>
-      ))}
+    <div style={{ display: "flex", padding: "16px" }}>
+      <Sidebar />
+      <div style={{ flexGrow: 1 }}>
+        <ErrorBoundary fallback={<p>AlbumListエラーです！</p>}>
+          <Suspense fallback={<p>AlbumListローディング中だよ〜</p>}>
+            <AlbumList />
+          </Suspense>
+        </ErrorBoundary>
+        <ErrorBoundary fallback={<p>TodoListエラーです！</p>}>
+          <Suspense fallback={<p>TodoListローディング中だよ〜</p>}>
+            <TodoList />
+          </Suspense>
+        </ErrorBoundary>
+      </div>
     </div>
   );
 };
