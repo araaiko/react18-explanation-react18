@@ -1,5 +1,6 @@
 /* 外部import */
 import React, { Suspense } from "react";
+import { ErrorBoundary } from "react-error-boundary";
 
 /* 内部import */
 import "./App.css";
@@ -17,9 +18,11 @@ function App() {
       <hr />
       <Transition />
       <hr />
-      <Suspense fallback={<p>ローディング中だよ〜</p>}>
-        <ReactQuery />
-      </Suspense>
+      <ErrorBoundary fallback={<p>エラーです！</p>}>
+        <Suspense fallback={<p>ローディング中だよ〜</p>}>
+          <ReactQuery />
+        </Suspense>
+      </ErrorBoundary>
     </div>
   );
 }
