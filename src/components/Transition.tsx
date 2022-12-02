@@ -54,6 +54,7 @@ const filteringAssignee = (assignee: string) => {
 export const Transition: FC = () => {
   const [selectedAssignee, setSelectedAssignee] = useState<string>("");
   const [taskList, setTaskList] = useState<Task[]>(tasks);
+  const [isShowList, setIsShowList] = useState<boolean>(false);
 
   const onClickAssignee = useCallback((assignee: string): void => {
     setSelectedAssignee(assignee);
@@ -92,8 +93,11 @@ export const Transition: FC = () => {
       {/* リセットボタン */}
       <br />
       <button onClick={() => onClickAssignee("")}>リセット</button>
+      <br />
+      <br />
+      <button onClick={() => setIsShowList(!isShowList)}>表示/非表示</button>
       {/* リスト */}
-      <TaskList taskList={taskList} />
+      {isShowList && <TaskList taskList={taskList} />}
     </div>
   );
 };
