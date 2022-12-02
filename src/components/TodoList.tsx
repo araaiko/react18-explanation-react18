@@ -3,9 +3,6 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { FC } from "react";
 
-/** 内部import */
-import { sleep } from "./AlbumList";
-
 type Todo = {
   userId: number;
   id: number;
@@ -14,9 +11,11 @@ type Todo = {
 };
 
 const fetchTodos = async () => {
-  const result = await axios.get<Todo[]>("https://jsonplaceholder.typicode.com/todos").then(await sleep(2500));
+  const result = await axios.get<Todo[]>(
+    "https://jsonplaceholder.typicode.com/todos"
+  );
   return result.data;
-}
+};
 
 export const TodoList: FC = () => {
   const { data } = useQuery<Todo[]>(["todos"], fetchTodos);
